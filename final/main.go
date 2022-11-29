@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/NikhilSharmaWe/gomodule/final/pkg/handle"
+	"github.com/NikhilSharmaWe/gomodule/final/controllers"
 
 	"github.com/gorilla/mux"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -12,8 +12,8 @@ import (
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", handle.CreateBook).Methods("GET")
-	r.HandleFunc("/getbooks", handle.GetBooks).Methods("POST")
-	r.HandleFunc("/book", handle.GetBookById).Methods("GET")
+	r.HandleFunc("/", controllers.CreateBook).Methods("GET")
+	r.HandleFunc("/getbooks", controllers.GetBooks).Methods("POST")
+	r.HandleFunc("/book", controllers.GetBookById).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8080", r))
 }

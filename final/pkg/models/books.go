@@ -1,4 +1,4 @@
-package database
+package models
 
 import (
 	"github.com/NikhilSharmaWe/gomodule/final/pkg/config"
@@ -16,25 +16,36 @@ type Book struct {
 }
 
 func init() {
-	config.Connect()
-	db = config.GetDB()
+	db = config.Connect()
 	db.AutoMigrate(&Book{})
 }
 
-func (b *Book) CreateBook() *Book {
+func (b *Book) CreateBook() error {
 	db.NewRecord(b)
 	db.Create(&b)
-	return b
+	err := db.Error
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
-func GetAllBooks() []Book {
+func GetAllBooks() ([]Book, error) {
 	var Books []Book
 	db.Find(&Books)
-	return Books
+	err := db.Error
+	if err != nil {
+		return Books, err
+	}
+	return Books, nil
 }
 
-func GetBookById(Id int64) (*Book, *gorm.DB) {
+func GetBookById(Id int64) (*Book, *gorm.DB, error) {
 	var getBook Book
 	db := db.Where("ID=?", Id).Find(&getBook)
-	return &getBook, db
+	err := db.Error
+	if err != nil {
+		return &getBook, db, err
+	}
+	return &getBook, db, nil
 }

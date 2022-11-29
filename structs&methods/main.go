@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+)
 
 type ProfilePicture struct {
 	Name string
@@ -46,5 +49,5 @@ func (picture *ProfilePicture) UpdateProfilePicture(modifiedProfilePicture Profi
 }
 
 func (profile Profile) CheckDuplicateProfile(profileToBeChecked Profile) bool {
-	return (profile == profileToBeChecked)
+	return reflect.DeepEqual(profile, profileToBeChecked)
 }

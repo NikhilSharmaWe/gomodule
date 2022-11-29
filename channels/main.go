@@ -15,12 +15,11 @@ func main() {
 }
 
 func getCorrectStrings(inputStrings []string, c chan string) []string {
-	var filteredString string
 	var filteredStrings []string
 
 	for _, s := range inputStrings {
 		go func(s string) {
-			filteredString = numericFreeString(s, c)
+			filteredString := numericFreeString(s, c)
 			filteredStrings = append(filteredStrings, filteredString)
 			c <- "ok"
 		}(s)
