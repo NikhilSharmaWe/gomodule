@@ -21,7 +21,7 @@ type Profile struct {
 func main() {
 	profile := GetProfile("Nikhil", "NikhilSharmaWe", "Product Engineer", "xxxcc", "vvv/dfe/rr.jpg", "999999999")
 	fmt.Println(profile)
-	modifiedProfile := GetProfile("Sharma", "NikhilSharmaWe", "Product Engineer", "xxxcc", "vvv/dfe/rr.jpg", "999999999")
+	modifiedProfile := GetProfile("Sharma", "", "", "", "", "")
 	profile.UpdateProfile(modifiedProfile)
 	fmt.Println(profile)
 }
@@ -40,12 +40,32 @@ func GetProfile(name, username, designation, imageName, imagePath, contactNumber
 	return profile
 }
 
+// Fields which are not equal to nil in the modified profile struct will be updated
 func (profile *Profile) UpdateProfile(modifiedProfile Profile) {
-	*profile = modifiedProfile
+	if modifiedProfile.Name != "" {
+		profile.Name = modifiedProfile.Name
+	}
+	if modifiedProfile.Username != "" {
+		profile.Username = modifiedProfile.Username
+	}
+	if modifiedProfile.Designation != "" {
+		profile.Designation = modifiedProfile.Designation
+	}
+	if modifiedProfile.ContactNumber != "" {
+		profile.ContactNumber = modifiedProfile.ContactNumber
+	}
+	if (modifiedProfile.ProfilePicture != ProfilePicture{}) {
+		profile.ProfilePicture.UpdateProfilePicture(modifiedProfile.ProfilePicture)
+	}
 }
 
 func (picture *ProfilePicture) UpdateProfilePicture(modifiedProfilePicture ProfilePicture) {
-	*picture = modifiedProfilePicture
+	if modifiedProfilePicture.Name != "" {
+		picture.Name = modifiedProfilePicture.Name
+	}
+	if modifiedProfilePicture.Path != "" {
+		picture.Path = modifiedProfilePicture.Path
+	}
 }
 
 func (profile Profile) CheckDuplicateProfile(profileToBeChecked Profile) bool {
