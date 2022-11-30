@@ -16,21 +16,18 @@ func main() {
 
 func getCorrectStrings(inputStrings []string, c chan string) []string {
 	var filteredStrings []string
-
 	for _, s := range inputStrings {
 		go func(s string) {
-			filteredString := numericFreeString(s, c)
-			filteredStrings = append(filteredStrings, filteredString)
-			c <- "ok"
+			numericFreeString(s, c)
 		}(s)
 	}
 	for i := 0; i < len(inputStrings); i++ {
-		<-c
+		filteredStrings = append(filteredStrings, <-c)
 	}
 	return filteredStrings
 }
 
-func numericFreeString(s string, c chan string) string {
+func numericFreeString(s string, c chan string) {
 	var filteredChars []string
 	for _, char := range s {
 		var numeric bool
@@ -45,5 +42,5 @@ func numericFreeString(s string, c chan string) string {
 		}
 	}
 	s = strings.Join(filteredChars, "")
-	return s
+	c <- s
 }

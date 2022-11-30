@@ -21,8 +21,10 @@ type Profile struct {
 func main() {
 	profile := GetProfile("Nikhil", "NikhilSharmaWe", "Product Engineer", "xxxcc", "vvv/dfe/rr.jpg", "999999999")
 	fmt.Println(profile)
-	modifiedProfile := GetProfile("Sharma", "", "", "", "", "")
-	profile.UpdateProfile(modifiedProfile)
+	mp := Profile{
+		Name: "Rewak",
+	}
+	profile.UpdateProfile(mp)
 	fmt.Println(profile)
 }
 
